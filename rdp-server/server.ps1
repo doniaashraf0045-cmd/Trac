@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     Uses System.Net.HttpListener to serve static files from the game directory.
-    This is the fallback web server used by start-game-server.bat when Python
+    This is the fallback web server used by start-game-server.ps1 when Python
     is not available.
 
 .PARAMETER GameDir

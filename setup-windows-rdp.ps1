@@ -133,6 +133,6 @@ foreach ($ip in $ipAddresses) {
 Write-Host "  └─────────────────────────────────────────────┘" -ForegroundColor White
 Write-Host ""
 Write-Host "  To start the game web server, run:" -ForegroundColor Yellow
-Write-Host "    .\start-game-server.bat" -ForegroundColor White
+Write-Host "    .\start-game-server.ps1" -ForegroundColor White
 Write-Host ""
 Write-Host "  RDP clients can now connect using one of the IP addresses above." -ForegroundColor Yellow
