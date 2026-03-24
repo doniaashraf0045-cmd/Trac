@@ -1,0 +1,6 @@
+# Phone Breaker Extreme — Python dependencies
+# All game code relies only on the Python standard library.
+# No external packages are required.
+#
+# Optional: install pytest for running the test suite.
+pytest>=7.0
