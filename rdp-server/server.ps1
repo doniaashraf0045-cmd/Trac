@@ -131,10 +131,12 @@ try {
         }
 
         # Prevent path traversal attacks
-        $safePath   = $decodedPath.TrimStart("/").Replace("/", [IO.Path]::DirectorySeparatorChar)
-        $fullPath   = [IO.Path]::GetFullPath((Join-Path $GameDir $safePath))
+        $safePath     = $decodedPath.TrimStart("/").Replace("/", [IO.Path]::DirectorySeparatorChar)
+        $fullPath     = [IO.Path]::GetFullPath((Join-Path $GameDir $safePath))
+        $relativePath = [IO.Path]::GetRelativePath($GameDir, $fullPath)
 
-        if (-not $fullPath.StartsWith($GameDir, [StringComparison]::OrdinalIgnoreCase)) {
+        if ($relativePath -eq ".." -or
+            $relativePath.StartsWith(".." + [IO.Path]::DirectorySeparatorChar, [StringComparison]::Ordinal)) {
             Write-Host ("  [403] {0}" -f $rawPath) -ForegroundColor Red
             Send-TextResponse -Response $response -StatusCode 403 -Text "403 Forbidden"
             continue
