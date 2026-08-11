@@ -142,8 +142,9 @@ try {
 
         if (-not (Test-Path $fullPath -PathType Leaf)) {
             Write-Host ("  [404] {0}" -f $rawPath) -ForegroundColor DarkYellow
+            $encodedPath = [System.Web.HttpUtility]::HtmlEncode($rawPath)
             Send-TextResponse -Response $response -StatusCode 404 `
-                              -Text "<h1>404 Not Found</h1><p>$rawPath</p>"
+                              -Text "<h1>404 Not Found</h1><p>$encodedPath</p>"
             continue
         }
 
