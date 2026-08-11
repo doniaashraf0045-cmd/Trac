@@ -111,8 +111,12 @@ if ($RdpUser -ne "") {
     }
 
     # Add to Remote Desktop Users group
-    Add-LocalGroupMember -Group "Remote Desktop Users" -Member $RdpUser -ErrorAction SilentlyContinue
-    Write-Host "  '$RdpUser' added to 'Remote Desktop Users' group." -ForegroundColor Green
+    try {
+        Add-LocalGroupMember -Group "Remote Desktop Users" -Member $RdpUser -ErrorAction Stop
+        Write-Host "  '$RdpUser' added to 'Remote Desktop Users' group." -ForegroundColor Green
+    } catch {
+        Write-Host "  Failed to add '$RdpUser' to 'Remote Desktop Users' group: $($_.Exception.Message)" -ForegroundColor Yellow
+    }
 }
 
 # ── 5. Print connection info ─────────────────────────────────────────────────
