@@ -93,10 +93,10 @@ if ($RdpUser -ne "") {
     Write-Step "Creating local user account '$RdpUser'..."
 
     if (-not $RdpPassword) {
-        throw "You must supply -RdpPassword when -RdpUser is specified."
+        throw "You must supply -RdpPassword (as a SecureString) when -RdpUser is specified. Example: -RdpPassword (Read-Host 'Enter RDP password' -AsSecureString)"
     }
 
-    $securePass = ConvertTo-SecureString $RdpPassword -AsPlainText -Force
+    $securePass = $RdpPassword
     $existing   = Get-LocalUser -Name $RdpUser -ErrorAction SilentlyContinue
     if ($existing) {
         Write-Host "  User '$RdpUser' already exists – updating password." -ForegroundColor Yellow
