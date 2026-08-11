@@ -85,6 +85,15 @@ if (-not $existingGameRule) {
                         -LocalPort $GamePort `
                         -Action Allow `
                         -Profile Any | Out-Null
+} else {
+    # Ensure the existing rule is enabled
+    Enable-NetFirewallRule -DisplayName $gameRuleName | Out-Null
+
+    # Ensure the existing rule listens on the requested game port
+    $portFilter = Get-NetFirewallPortFilter -AssociatedNetFirewallRule $existingGameRule -ErrorAction SilentlyContinue
+    if ($portFilter -and $portFilter.LocalPort -ne $GamePort) {
+        Set-NetFirewallPortFilter -AssociatedNetFirewallRule $existingGameRule -LocalPort $GamePort | Out-Null
+    }
 }
 Write-Host "  Game server firewall rule configured on port $GamePort." -ForegroundColor Green
 
